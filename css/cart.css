@@ -1,0 +1,55 @@
+.wrap {
+    margin-top: 10px;
+    height: 200px;
+}
+
+.quantity {
+    width: 30px;
+    height: 24px;
+}
+
+.minus {
+    height: 24px;
+}
+.plus {
+    height: 24px;
+}
+.minus img {
+    line-height: 16px;
+}
+.plus img {
+    line-height: 16px;
+}
+
+
+img {
+    width: 100px;
+    height: inherit;
+}
+.left {
+    float: left;
+    width: 100px;
+    margin: 0 10px;
+    height: 100%;
+}
+.main {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.main .main_left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.main .main_right {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+}
+
+.main_left span {
+    color: red;
+}

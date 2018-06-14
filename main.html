@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" http-equiv="content-type">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<title>Document</title>
+	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="./css/mycss.css">
+
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript">
+        $.ajax({
+            url: "http://yunxtec.com/test/discount.php",
+            type: "get",
+            dataType:"json",
+            data: {},
+            success: function (jsonText) {
+                if(jsonText){
+                    var discount = jsonText.discount;
+                    $.each(discount,function(i,item){
+                        var txt = "<div class='product_list'>\n" +
+                        "\t\t\t\t\t<div class=\"image\">\n" +
+                        "\t\t\t\t\t\t<a href="+item.url+"><img src="+item.img+" alt=\"图片被吃掉了\" style=\"width: 150px;\"></a>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t\t<div class=\"desc\">\n" +
+                        "\t\t\t\t\t\t<h1>"+item.goods+"</h1>\n" +
+                        "\t\t\t\t\t\t<h4 style=\"color: red;\">￥"+item.dprice+"</h4>\n" +
+                        "\t\t\t\t\t\t<div class=\"oldprice\">\n" +
+                        "\t\t\t\t\t\t\t<span>原价:￥"+item.price+"</span>\n" +
+                        "\t\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t\t\t<div class=\"pay\">\n" +
+                        "\t\t\t\t\t\t\t<span>300人购买</span>\n" +
+                        "\t\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t</div>";
+                        $('.products').append(txt);
+
+                    });
+                }
+            }
+        });
+	</script>
+
+</head>
+<body>
+	<header data-role="header" data-theme="a" data-position="fixed">
+		<div class="header_left">
+			<a href="#anylink" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
+		</div>
+		<input type="search"   class="input_flex"/>
+		<div class="header_right">
+			<a href="#" data-role="button" data-icon="grid" data-iconpos="left">登录</a>
+		</div>
+
+	</header>
+	<section data-role="content">
+		<iframe src="./phototurns.html" frameborder="0" width="100%" height="260px"></iframe>
+
+		<div class="bar">
+			<div><a onclick="window.location.href='./cart.html'"data-role="button" data-icon="grid" data-iconpos="top"><span>积分兑换</span></a></div>
+			<div><a onclick="window.location.href='./cart.html'" data-role="button" data-icon="gear" data-iconpos="top"><span>照片成书</span></a></div>
+			<div><a onclick="window.location.href='./cart.html'" data-role="button" data-icon="info" data-iconpos="top"><span>限时抢购</span></a></div>
+			<div><a onclick="window.location.href='./cart.html'" data-role="button" data-icon="star" data-iconpos="top"><span>纪念礼物</span></a></div>
+		</div>
+		<article>
+			
+			<h2>热门商品</h2>
+			<div class="products" >
+
+			</div>
+
+
+
+
+		</article>
+	</section>
+	<div class="box"></div>
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" data-icon="home">首页</a></li>
+				<li><a onclick="window.location.href='./show.html'" data-icon="search">商城</a></li>
+				<li><a onclick="window.location.href='./cart.html'" data-icon="gear">购物车</a></li>
+				<li><a onclick="window.location.href='./person.html'" data-icon="bars">个人中心</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            for(var i=0; i < localStorage.length; i++) {
+                var id = localStorage.key(i);
+                var productItem = JSON.parse(localStorage.getItem(id));
+                var text = "<div class=\"wrap\" id=\""+id+"\">\n" +
+                    "            <div class=\"left\">\n" +
+                    "                <img src=\""+productItem.img+"\" alt=\"图片被吃掉了\">\n" +
+                    "            </div>\n" +
+                    "            <div class=\"main\">\n" +
+                    "                <h3>"+productItem.goods+"</h3>\n" +
+                    "                <p>"+productItem.descr+"</p>\n" +
+                    "                <p >价格:￥<span id='priceId_"+id + "'>"+productItem.price+"</span></p>\n" +
+                    "                <div class=\"main_left\">\n" +
+                    "                    合计：<span id=\"totalPriceId_"+id+"\"></span>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"main_right\">\n" +
+                    "                    <table>\n" +
+                    "                        <tr>\n" +
+                    "                            <td><div class=\"minus\"><input type=\"button\" value=\"-\" name=\"minus\" ></div></td>\n" +
+                    "                            <td><input type=\"text\" class=\"quantity\" value=\""+productItem.quantity+"\" id=\"quantityId_"+id+"\"></td>\n" +
+                    "                            <td><div class=\"plus\"><input type=\"button\" value=\"+\" name=\"plus\"></div></td>\n" +
+                    "                        </tr>\n" +
+                    "                    </table>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "    </div>";
+                $('#p').append(text);
+                changeTotalPrice(id, productItem.price, productItem.quantity);
+            }
+
+        });
+
+        function changeTotalPrice(id,price, quantity) {
+            var total = parseInt(price)*parseInt(quantity)
+            total = total.toFixed(2);
+            console.log(total);
+            $('#totalPriceId_'+id).text(total);
+        }
+
+        $("input").live('click', function () {
+           var name = $(this).attr("name");
+           var parent = $(this).parents(".wrap");
+           var id = parent.attr("id");
+           var quantity = $("#quantityId_"+id).val();
+           var price = $("#priceId_"+id).text();
+           quantity = parseInt(quantity);
+           if(name == 'minus') {
+                if(quantity==null || quantity <= 0) {
+                    quantity = 0;
+                } else {
+                    quantity = quantity -1;
+                }
+           } else if(name == 'plus') {
+                quantity = quantity + 1;
+           } else {
+               return;
+           }
+
+            $("#quantityId_"+id).val(quantity);
+            changeTotalPrice(id, quantity, price);
+            updateLocalStorage(id, quantity);
+        });
+
+        function updateLocalStorage(id, quantity) {
+            var productItem = JSON.parse(localStorage.getItem(id));
+            quantity = parseInt(quantity);
+            productItem.quantity = quantity;
+            newProductItem = JSON.stringify(productItem);
+            localStorage.setItem(id, newProductItem);
+            // if(quantity == null || quantity <= 0) {
+            //     localStorage.removeItem(id);
+            // }
+        }
+    </script>
+</head>
+<body>
+    <div id="p">
+
+        <!--<div class="wrap" id="">-->
+            <!--<div class="left">-->
+                <!--<img src="productItem.img" alt="图片被吃掉了">-->
+            <!--</div>-->
+            <!--<div class="main">-->
+                <!--<h1>productItem.goods</h1>-->
+                <!--<p>productItem.descr</p>-->
+                <!--<p>productItem.price</p>-->
+                <!--<div class="main_left">-->
+                    <!--合计：<span id="totPriceId_">￥25</span>-->
+                <!--</div>-->
+                <!--<div class="main_right">-->
+                    <!--<table>-->
+                        <!--<tr>-->
+                            <!--<td><div class="minus"><input type="button" value="-" name="minus" ></div></td>-->
+                            <!--<td><input type="text" class="quantity" value="productItem.quantity" id="quantityId_"></td>-->
+                            <!--<td><div class="plus"><input type="button" value="+" name="plus"></div></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a onclick="window.location.href='./main.html'" data-icon="home">首页</a></li>
+                <li><a onclick="window.location.href='./show.html'" data-icon="search">商城</a></li>
+                <li><a href="#" data-icon="gear">购物车</a></li>
+                <li><a onclick="window.location.href='./person.html'" data-icon="bars">个人中心</a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>

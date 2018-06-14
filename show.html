@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>Title</title>
+    <link rel="stylesheet" href="./css/show.css">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/show.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+        var data;
+        $.ajax({
+            url: "http://yunxtec.com/test/goodslist.php",
+            type: "get",
+            dataType:"JSON",
+            data: {},
+            success: function (jsonText) {
+                if(jsonText){
+                    var goodslist = jsonText.goodslist;
+                    data = goodslist;
+                    $.each(goodslist,function(i,item){
+                        if(i % 2== 0) {
+                            var $div = "<div id=\"wrap_"+i+"\" class='wrap'></div>";
+                            $(".content").append($div);
+                            //根据item的序号来增加div节点，展示json内容
+                            var txt = "<div class=\"left\">\n" +
+                                "                <a href=\""+item.url+"\"><img src=\""+item.img+"\" alt=\"item.goods\" /></a>\n" +
+                                "                                <a href=\""+item.url+"\">"+item.goods+"</a>\n"+
+                                "                <p>"+item.descr+"</p>\n" +
+                                "                <div class=\"footer\">\n" +
+                                "                    <div class=\"price\">\n" +
+                                "                        <p>￥"+item.price+"</p>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"main\">\n" +
+                                "                        <a href=# class=\"plus\"id='"+i+"'>+</a>\n" +
+                                "                    </div>\n" +
+                                "                </div>\n" +
+                                "            </div>";
+                            $("#wrap_"+i).append(txt);
+                        } else {
+                            //根据item的序号来增加div节点，展示json内容
+                            var txt = "<div class=\"right\">\n" +
+                                "                <a href=\""+item.url+"\"><img src=\""+item.img+"\" alt=\"item.goods\"  /></a>\n" +
+                                "                                <a href=\""+item.url+"\">"+item.goods+"</a>\n"+
+                                "                <p>"+item.descr+"</p>\n" +
+                                "                <div class=\"footer\">\n" +
+                                "                    <div class=\"price\">\n" +
+                                "                        <p>￥"+item.price+"</p>\n" +
+                                "                    </div>\n" +
+                                "                    <div class=\"main\">\n" +
+                                "                        <a href=# class=\"plus\"id='"+i+"'>+</a>\n" +
+                                "                    </div>\n" +
+                                "                </div>\n" +
+                                "            </div>";
+                            $("#wrap_"+(i-1)).append(txt);
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+</head>
+<body>
+
+<div data-role="page">
+    <div data-role="content" class="content">
+
+
+
+    </div>
+    <div data-role="footer" data-position="fixed" data-toggle="false">
+        <div data-role="navbar">
+            <ul>
+                <li><a onclick="window.location.href='./main.html'" data-icon="home">首页</a></li>
+                <li><a href="#" data-icon="search">商城</a></li>
+                <li><a onclick="window.location.href='./cart.html'" data-icon="gear">购物车</a></li>
+                <li><a onclick="window.location.href='./person.html'" data-icon="bars">个人中心</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
